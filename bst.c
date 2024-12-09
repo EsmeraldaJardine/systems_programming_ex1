@@ -8,7 +8,6 @@ typedef struct node {
     struct node *right;    // Pointer to the right child
 } node_t;
 
-
 node_t *createTree(int firstElem) {
     node_t *root = malloc(sizeof(node_t));
     if (root == NULL) {
@@ -18,8 +17,6 @@ node_t *createTree(int firstElem) {
     root->left = NULL;
     root->right = NULL;
     return root;
-    
-
 };
 
 node_t * search(node_t * node, int toFind){
@@ -37,9 +34,7 @@ node_t * search(node_t * node, int toFind){
     else {
         return search(node->right, toFind);
     }
-
 };
-
 
 void insert(node_t *node, int elem){
     if (elem == node->value || node == NULL) {
@@ -78,6 +73,11 @@ void destroyTree(node_t * node){
     destroyTree(node->left);
     destroyTree(node->right);
     free(node);
+};
+
+void delete(node_t * node, int elem){
+    if (node == NULL){return;}
+
 };
     
 
