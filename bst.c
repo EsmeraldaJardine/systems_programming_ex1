@@ -77,6 +77,18 @@ void destroyTree(node_t * node){
 
 void delete(node_t * node, int elem){
     if (node == NULL){return;}
+    //traversal
+    if (elem < node->value){
+        delete(node->left, elem);
+    }
+    else if (elem > node->value){
+        delete(node->right, elem);
+    }
+    else if (elem == node->value && node->left == NULL && node->right == NULL){
+        //leaf node
+        printf("Deleting leaf node\n");
+        free(node);
+    }
 
 };
     
@@ -91,8 +103,7 @@ int main(){
     search(root, 5);
     search(root, 12);
     search(root, 22);
-    destroyTree(root);
-    search(root, 5);
+
 
 };
 
