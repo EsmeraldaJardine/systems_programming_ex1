@@ -84,12 +84,33 @@ void delete(node_t * node, int elem){
     else if (elem > node->value){
         delete(node->right, elem);
     }
-    else if (elem == node->value && node->left == NULL && node->right == NULL){
+    else{
         //leaf node
+        if (elem == node->value && node->left == NULL && node->right == NULL){
         printf("Deleting leaf node\n");
         free(node);
+        return;
+        } 
+        //node with one child
+        if (elem == node->value && node->left != NULL || node->right != NULL){
+            printf("Deleting node with one child\n");
+            node_t *child = (node->left != NULL) ? node->left : node->right; //child pointer
+            node->value = child->value;
+            node->left = child->left;
+            node->right = child->right;
+            free(child);
+        }
+        //node with two children
+        if (elem == node->value && node->left != NULL && node->right != NULL){
+            printf("Deleting node with two children\n");
+            node_t *min_elem = node->right;
+            while (min_elem->left != NULL){
+                min_elem = min_elem->left;
+            }
+            node->value = min_elem->value;
+            delete(node->right, min_elem->value);
+        }
     }
-
 };
     
 
