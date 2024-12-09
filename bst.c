@@ -23,3 +23,21 @@ node_t *initialise_tree(int firstElem) {
 };
 
 
+void insert(node_t *node, int elem){
+    if (elem == node->value || node == NULL) {
+        return;
+    }
+    // left subtree
+    if (elem < node->value) {
+        if (node->left == NULL) {
+            node->left = (node_t *)malloc(sizeof(node_t));
+            if (node->left != NULL) {
+                node->left->value = elem;
+                node->left->left = NULL;
+                node->left->right = NULL;
+            }
+        } 
+        else { insert(node->left, elem); }
+
+};
+
