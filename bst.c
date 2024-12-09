@@ -49,6 +49,7 @@ void insert(node_t *node, int elem){
                 node->left->value = elem;
                 node->left->left = NULL;
                 node->left->right = NULL;
+                printf("Inserted %d to the left of %d\n", elem, node->value);
             }
         } 
         else { insert(node->left, elem); }
@@ -61,6 +62,7 @@ void insert(node_t *node, int elem){
                 node->right->value = elem;
                 node->right->left = NULL;
                 node->right->right = NULL;
+                printf("Inserted %d to the right of %d\n", elem, node->value);
             }
         } 
         else { insert(node->right, elem); }
@@ -116,6 +118,7 @@ void delete(node_t * node, int elem){
 
 int main(){
     node_t *root = createTree(10);
+    insert(root, 20);
     insert(root, 5);
     insert(root, 12);
     insert(root, 5);
@@ -124,6 +127,14 @@ int main(){
     search(root, 5);
     search(root, 12);
     search(root, 22);
+    delete(root, 5);
+    search(root, 5);
+    insert(root, 7);
+    insert(root, 6);
+    insert(root, 8);
+    insert(root, 1);
+    insert(root, 3);
+    insert(root, 4);
 
 
 };
