@@ -24,7 +24,7 @@ node_t *createTree(int firstElem) {
 
 node_t * search(node_t * node, int toFind){
     if (node == NULL) {
-        printf("Not found\n");
+        printf("%d was not found\n", toFind);
         return NULL;
     }
     if (toFind == node->value) {
@@ -71,6 +71,14 @@ void insert(node_t *node, int elem){
         else { insert(node->right, elem); }
     }
 };
+
+void destroyTree(node_t * node){
+    if (node == NULL) {return;}
+
+    destroyTree(node->left);
+    destroyTree(node->right);
+    free(node);
+};
     
 
 int main(){
@@ -83,5 +91,8 @@ int main(){
     search(root, 5);
     search(root, 12);
     search(root, 22);
+    destroyTree(root);
+    search(root, 5);
+
 };
 
