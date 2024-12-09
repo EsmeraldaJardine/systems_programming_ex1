@@ -25,13 +25,14 @@ node_t *createTree(int firstElem) {
 
 void insert(node_t *node, int elem){
     if (elem == node->value || node == NULL) {
+        printf("Error \n");
         return;
     }
     // left subtree
     if (elem < node->value) {
         if (node->left == NULL) {
-            node->left = (node_t *)malloc(sizeof(node_t));
-            if (node->left != NULL) {
+            node->left = malloc(sizeof(node_t));
+            if (node->left != NULL) { // if malloc was successful
                 node->left->value = elem;
                 node->left->left = NULL;
                 node->left->right = NULL;
@@ -39,12 +40,27 @@ void insert(node_t *node, int elem){
         } 
         else { insert(node->left, elem); }
     }
+    //right subtree
+    if (elem > node->value) {
+        if (node->right == NULL) {
+            node->right = malloc(sizeof(node_t));
+            if (node->right != NULL) { // if malloc was successful
+                node->right->value = elem;
+                node->right->left = NULL;
+                node->right->right = NULL;
+            }
+        } 
+        else { insert(node->right, elem); }
+    }
 };
     
 
 int main(){
     node_t *root = createTree(10);
     insert(root, 5);
+    insert(root, 12);
+    insert(root, 5);
     printf("%d\n", root->left->value);
+    printf("%d\n", root->right->value);
 };
 
