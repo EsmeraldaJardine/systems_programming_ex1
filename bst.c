@@ -9,7 +9,7 @@ typedef struct node {
 } node_t;
 
 
-node_t *initialise_tree(int firstElem) {
+node_t *createTree(int firstElem) {
     node_t *root = malloc(sizeof(node_t));
     if (root == NULL) {
         return NULL;
@@ -38,6 +38,13 @@ void insert(node_t *node, int elem){
             }
         } 
         else { insert(node->left, elem); }
+    }
+};
+    
 
+int main(){
+    node_t *root = createTree(10);
+    insert(root, 5);
+    printf("%d\n", root->left->value);
 };
 
