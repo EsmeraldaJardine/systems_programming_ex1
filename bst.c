@@ -76,6 +76,7 @@ void destroyTree(node_t * node){
     destroyTree(node->left);
     destroyTree(node->right);
     free(node);
+    node = NULL;
 }
 
 void delete(node_t * node, int elem){
@@ -97,31 +98,19 @@ void delete(node_t * node, int elem){
 
     // leaf node 
     if (current->left == NULL && current->right == NULL) {
-        // root node?
-        if (current == node) {
-            free(current);
-            node = NULL; 
-            printf("Deleted root node\n");
-            return;
-        }
+
         if (isLeftChild)
             {parent->left = NULL;} 
         else 
             {parent->right = NULL;}
         free(current);
+        current = NULL;
         printf("Deleted leaf node\n");
         return; //this is not doing the right thing as leaf node has no children
     } 
     // node with one child
     if (current->left == NULL || current->right == NULL) {
         node_t *child = (current->left == NULL) ? current->right : current->left;
-        
-        //root node?
-        if (current == node) {
-            *node = *child;
-            free(current);
-            return;
-        }
         
         if (isLeftChild)
             {parent->left = child;}
@@ -149,6 +138,7 @@ void delete(node_t * node, int elem){
         min_elem_parent->right = min_elem->right; // handle the case where the smallest element is the right child of its parent
     }
     free(min_elem);
+    min_elem = NULL;
     }
         
 }
