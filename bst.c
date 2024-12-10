@@ -99,8 +99,8 @@ void delete(node_t * node, int elem){
     if (current->left == NULL && current->right == NULL) {
         // root node?
         if (current == node) {
-            free(current); 
-            node = NULL;
+            free(current);
+            node = NULL; 
             printf("Deleted root node\n");
             return;
         }
@@ -118,9 +118,9 @@ void delete(node_t * node, int elem){
         
         //root node?
         if (current == node) {
-            node = child;
+            *node = *child;
             free(current);
-            return  ;
+            return;
         }
         
         if (hasLeftChild)
@@ -169,11 +169,8 @@ int main(){
     insert(root, 13);
     insert(root, 17);
     insert(root, 19);
-    delete(root, 1);
-    search(root, 1);
-    search(root, 4);
-
-
-
+    delete(root, 10);
+    search(root, 10);
+    search(root, 5);
 }
 
