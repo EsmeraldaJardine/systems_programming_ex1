@@ -81,16 +81,16 @@ void destroyTree(node_t * node){
 void delete(node_t * node, int elem){
     node_t *parent = NULL;
     node_t *current = node;
-    bool hasLeftChild = false;
+    bool isLeftChild = false;
     //traversal
     while (current != NULL && current->value != elem){
         parent = current;
         if (elem < current->value){
             current = current->left;
-            hasLeftChild = true;
+            isLeftChild = true;
         }else{
             current = current->right;
-            hasLeftChild = false;
+            isLeftChild = false;
         }
     }
     if (current == NULL){return;}
@@ -104,7 +104,7 @@ void delete(node_t * node, int elem){
             printf("Deleted root node\n");
             return;
         }
-        if (hasLeftChild)
+        if (isLeftChild)
             {parent->left = NULL;} 
         else 
             {parent->right = NULL;}
@@ -123,12 +123,13 @@ void delete(node_t * node, int elem){
             return;
         }
         
-        if (hasLeftChild)
+        if (isLeftChild)
             {parent->left = child;}
         else
             {parent->right = child;}
         
         free(current);
+        current = NULL;
         return;
     }
 
@@ -157,6 +158,10 @@ int main(){
     node_t *root = createTree(10);
     insert(root, 5);
     insert(root, 15);
+    insert(root, 12);
+    insert(root, 17);
+    insert(root, 15);
+
     insert(root, 8);
     insert(root, 3);
     insert(root, 12);
@@ -169,8 +174,5 @@ int main(){
     insert(root, 13);
     insert(root, 17);
     insert(root, 19);
-    delete(root, 10);
-    search(root, 10);
-    search(root, 5);
 }
 
