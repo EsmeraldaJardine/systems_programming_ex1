@@ -17,7 +17,7 @@ node_t *createTree(int firstElem) {
     root->left = NULL;
     root->right = NULL;
     return root;
-};
+}
 
 node_t * search(node_t * node, int toFind){
     if (node == NULL) {
@@ -29,12 +29,14 @@ node_t * search(node_t * node, int toFind){
         return node;
     }
     if (toFind < node->value) {
+        printf("Searching left of %d\n", node->value);
         return search(node->left, toFind);
     }
     else {
+        printf("Searching right of %d\n", node->value);
         return search(node->right, toFind);
     }
-};
+}
 
 void insert(node_t *node, int elem){
     if (elem == node->value) {
@@ -66,7 +68,7 @@ void insert(node_t *node, int elem){
         } 
         else { insert(node->right, elem); }
     }
-};
+}
 
 void destroyTree(node_t * node){
     if (node == NULL) {return;}
@@ -74,7 +76,7 @@ void destroyTree(node_t * node){
     destroyTree(node->left);
     destroyTree(node->right);
     free(node);
-};
+}
 
 void delete(node_t * node, int elem){
     node_t *parent = NULL;
@@ -99,6 +101,7 @@ void delete(node_t * node, int elem){
         if (current == node) {
             free(current); 
             node = NULL;
+            printf("Deleted root node\n");
             return;
         }
         if (hasLeftChild)
@@ -106,6 +109,7 @@ void delete(node_t * node, int elem){
         else 
             {parent->right = NULL;}
         free(current);
+        printf("Deleted leaf node\n");
         return; //this is not doing the right thing as leaf node has no children
     } 
     // node with one child
@@ -129,42 +133,47 @@ void delete(node_t * node, int elem){
     }
 
     else {
-        //node with two children
-        printf("Deleting node with two children\n");
-            node_t *min_elem = current->right;
-            while (min_elem->left != NULL){
-                min_elem = min_elem->left;
-            }
-            current->value = min_elem->value;
-            delete(current->right, min_elem->value);
-
-
+    // node with two children
+    printf("Deleting node with two children\n");
+    node_t *min_elem = current->right;
+    node_t *min_elem_parent = current;
+    while (min_elem->left != NULL) { // find the smallest element in the right subtree
+        min_elem_parent = min_elem;
+        min_elem = min_elem->left;
     }
-
-    
-
+    current->value = min_elem->value; // replace the current node with the smallest element
+    if (min_elem_parent->left == min_elem) { // handle the case where the smallest element is the left child of its parent 
+        min_elem_parent->left = min_elem->right; // set the right child of the smallest element as the left child of its parent (null or not)
+    } else {
+        min_elem_parent->right = min_elem->right; // handle the case where the smallest element is the right child of its parent
+    }
+    free(min_elem);
+    }
         
-};
+}
     
 
 int main(){
     node_t *root = createTree(10);
-    insert(root, 20);
     insert(root, 5);
-    insert(root, 12);
-    insert(root, 5);
-    search(root, 5);
-    search(root, 12);
-    search(root, 22);
-    delete(root, 5);
-    search(root, 5);
-    insert(root, 7);
-    insert(root, 6);
+    insert(root, 15);
     insert(root, 8);
-    insert(root, 1);
     insert(root, 3);
+    insert(root, 12);
+    insert(root, 18);
+    insert(root, 1);
     insert(root, 4);
+    insert(root, 7);
+    insert(root, 9);
+    insert(root, 11);
+    insert(root, 13);
+    insert(root, 17);
+    insert(root, 19);
+    delete(root, 1);
+    search(root, 1);
+    search(root, 4);
 
 
-};
+
+}
 
